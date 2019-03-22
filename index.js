@@ -1,5 +1,6 @@
 const request = require('request-promise');
 const cheerio = require('cheerio');
+const ObjectsToCsv = require('objects-to-csv');
 
 const url = 'https://sfbay.craigslist.org/search/sof'
 
@@ -55,6 +56,8 @@ async function scrapeCraigslist() {
   const jobsWithHeaders = await scrapeJobHeader();
   const jobsFullData = await scrapeDescription(jobsWithHeaders)
   console.log(jobsFullData);
+  const csv = new ObjectsToCsv(jobsFullData);
+  csv.toDisk('./csv_data.csv')
 }
 
 scrapeCraigslist();
